@@ -165,6 +165,6 @@ def plot_PN(data, min_pass, team, min_min, max_min, match):
   ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_min), ha='left', fontproperties=reg, color='#FFFFFF', size='18', va='center')
   ax.text(100, -4, match.upper(), ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
   
-  plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight')
+  plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
   
   return fig
