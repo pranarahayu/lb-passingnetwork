@@ -1,10 +1,3 @@
-import sys
-
-sys.path.append("xgmodel.py")
-import xgmodel
-from xgmodel import calculate_xG
-from xgmodel import xgfix
-
 import os
 import pandas as pd
 import glob
