@@ -45,11 +45,11 @@ def click_button():
             
 st.button('Rekomenasikan menit!', on_click=click_button)
 if st.session_state.clicked:
-    st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1]))
+    st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1].astype(int)))
         
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match)
         
 with open('pnet.jpg', 'rb') as img:
-    fn = 'PN_'+filter+'-'+f_team+'.jpg'
+    fn = 'PN_'+filter+'.jpg'
     btn = st.download_button(label="Download Passing Network", data=img, file_name=fn, mime="image/jpg")
 st.pyplot(pn)
