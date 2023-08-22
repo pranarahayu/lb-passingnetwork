@@ -22,8 +22,8 @@ with col1:
 with col2:
     rp_data = st.file_uploader("Upload file report excel!")
     rp = pd.read_excel(rp_data, skiprows=[0])
-    team1 = df_m['Team'][0]
-    team2 = df_m['Opponent'][0]
+    team1 = rp['Team'][0]
+    team2 = rp['Opponent'][0]
     match = team1 +' vs '+team2
             
 colx, coly, colz = st.columns(3)
