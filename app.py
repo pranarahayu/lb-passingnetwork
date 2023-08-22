@@ -17,14 +17,20 @@ with st.expander("BACA INI DULU."):
 col1, col2 = st.columns(2)
 with col1:
     tl_data = st.file_uploader("Upload file timeline excel!")
-    tl = pd.read_excel(tl_data, skiprows=[0])
+    try:
+        tl = pd.read_excel(tl_data, skiprows=[0])
+    except ValueError:
+        st.error("Please upload the timeline file")
 
 with col2:
     rp_data = st.file_uploader("Upload file report excel!")
-    rp = pd.read_excel(rp_data, skiprows=[0])
-    team1 = rp['Team'][0]
-    team2 = rp['Opponent'][0]
-    match = team1 +' vs '+team2
+    try:
+        rp = pd.read_excel(rp_data, skiprows=[0])
+        team1 = rp['Team'][0]
+        team2 = rp['Opponent'][0]
+        match = team1 +' vs '+team2
+    except ValueError:
+        st.error("Please upload the excel report file")
             
 colx, coly, colz = st.columns(3)
 with colx:
