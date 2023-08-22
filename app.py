@@ -4,7 +4,7 @@ import numpy as np
 import streamlit as st
 
 st.set_page_config(page_title='Lapangbola Passing Network Dashboard', layout='wide')
-st.header('Assign xG value to shots')
+st.header('Passing Network Generator')
 st.markdown('Created by: Prana - R&D Division Lapangbola.com')
 
 sys.path.append("listfungsi.py")
