@@ -12,7 +12,7 @@ from listfungsi import get_PNdata
 from listfungsi import plot_PN
 
 with st.expander("BACA INI DULU."):
-    st.write("")
+    st.write("Upload file timeline yang telah selesai di-QC!")
     
 col1, col2 = st.columns(2)
 with col1:
@@ -49,7 +49,7 @@ if 'clicked' not in st.session_state:
 def click_button():
     st.session_state.clicked = True
             
-st.button('Rekomenasikan menit!', on_click=click_button)
+st.button('Rekomendasikan menit!', on_click=click_button)
 if st.session_state.clicked:
     st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1]))
         
