@@ -45,7 +45,7 @@ def click_button():
             
 st.button('Rekomenasikan menit!', on_click=click_button)
 if st.session_state.clicked:
-    st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1].astype(int)))
+    st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1]))
         
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match)
         
