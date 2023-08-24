@@ -43,7 +43,7 @@ with colx:
 with coly:
     min_pass = st.number_input('Select Min. Successful Passes', min_value=1, max_value=5, step=1)
 with colz:
-    menit = st.slider('Select Minutes', 0, 90, (1, 30))
+    menit = st.slider('Select Minutes', 0, 91, (1, 30))
         
 plotdata = get_PNdata(tl, rp, menit[0], menit[1], filter, min_pass)
 pass_between = plotdata[0]
@@ -54,9 +54,9 @@ if 'clicked' not in st.session_state:
 def click_button():
     st.session_state.clicked = True
             
-st.button('Rekomendasikan menit!', on_click=click_button)
+st.button('Subs/Red Cards Mins!', on_click=click_button)
 if st.session_state.clicked:
-    st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1]))
+    st.write('Menit-menit pergantian dan/atau kartu merah: '+str(plotdata[1]))
         
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
 
