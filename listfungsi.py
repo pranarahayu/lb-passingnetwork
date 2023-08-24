@@ -118,7 +118,7 @@ def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
   passtot.rename({'Count':'Total'}, axis='columns',inplace=True)
   passtot['size'] = (passtot['Total']/max(passtot['Total']))*3000
 
-  pass_between = pass_between[pass_between['Count']>min_pass]
+  pass_between = pass_between[pass_between['Count']>=min_pass]
   pass_between = pd.merge(pass_between, passtot, on='Passer', how='left')
 
   return pass_between, listmin
