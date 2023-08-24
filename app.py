@@ -32,7 +32,7 @@ with col2:
         goal2 = rp['Result'].str.split('- ').str[1]
         mw = rp['Gameweek'][0]
         match = team1 +' '+goal1+' vs '+goal2+' '+team2
-        gw = 'Liga 1 2023/24 | GW '+str(gw)
+        gw = 'Liga 1 2023/24 | GW '+str(mw)
     except ValueError:
         st.error("Please upload the excel report file")
             
