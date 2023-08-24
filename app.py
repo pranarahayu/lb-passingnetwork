@@ -46,7 +46,7 @@ with coly:
 with colz:
     menit = st.slider('Select Minutes', 0, 91, (1, 30))
         
-plotdata = get_PNdata(tl, rp, menit[0], menit[1], filter, min_pass)
+plotdata = get_PNdata(tl, rp, menit[0], menit[1], filter)
 pass_between = plotdata[0]
         
 if 'clicked' not in st.session_state:
