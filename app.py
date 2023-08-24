@@ -28,6 +28,8 @@ with col2:
         rp = pd.read_excel(rp_data, skiprows=[0])
         team1 = rp['Team'][0]
         team2 = rp['Opponent'][0]
+        goal1 = rp['Result'].str.split(' -').str[0]
+        goal2 = rp['Result'].str.split('- ').str[1]
         match = team1 +' vs '+team2
     except ValueError:
         st.error("Please upload the excel report file")
@@ -36,7 +38,7 @@ colx, coly, colz = st.columns(3)
 with colx:
     filter = st.selectbox('Select Team', [team1, team2])
 with coly:
-    min_pass = st.number_input('Select Min. Successful Passes', min_value=0, max_value=3, step=1)
+    min_pass = st.number_input('Select Min. Successful Passes', min_value=1, max_value=5, step=1)
 with colz:
     menit = st.slider('Select Minutes', 0, 90, (1, 30))
         
