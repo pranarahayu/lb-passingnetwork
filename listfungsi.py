@@ -218,9 +218,9 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
                 edgecolors='#000000', linewidth=4, ax=ax, marker='v')
   ax.text(60, 112, 'Subbed Out', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
 
-  ax.text(0, -8, 'PASSING NETWORK', ha='left', fontproperties=bold, color='#FFFFFF', size='22', va='center')
-  ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_mins), ha='left', fontproperties=reg, color='#FFFFFF', size='18', va='center')
-  ax.text(100, -8, match.upper(), ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
+  ax.text(0, -8, 'PASSING NETWORK', ha='left', fontproperties=bold, color='#000000', size='22', va='center')
+  ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_mins), ha='left', fontproperties=reg, color='#000000', size='18', va='center')
+  ax.text(100, -8, match.upper(), ha='right', fontproperties=reg, color='#000000', size='18', va='center')
   ax.text(100, -4, gw, ha='right', fontproperties=reg, color='#000000', size='18', va='center')
   
   plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
