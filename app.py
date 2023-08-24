@@ -30,7 +30,7 @@ with col2:
         team2 = rp['Opponent'][0]
         goal1 = rp['Result'].str.split(' -').str[0]
         goal2 = rp['Result'].str.split('- ').str[1]
-        mw = pos['Gameweek'][0]
+        mw = rp['Gameweek'][0]
         match = team1 +' '+goal1+' vs '+goal2+' '+team2
         gw = 'Liga 1 2023/24 | GW '+str(gw)
     except ValueError:
