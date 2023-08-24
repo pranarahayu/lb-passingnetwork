@@ -30,7 +30,9 @@ with col2:
         team2 = rp['Opponent'][0]
         goal1 = rp['Result'].str.split(' -').str[0]
         goal2 = rp['Result'].str.split('- ').str[1]
+        mw = pos['Gameweek'][0]
         match = team1 +' '+goal1+' vs '+goal2+' '+team2
+        gw = 'Liga 1 2023/24 | GW '+str(gw)
     except ValueError:
         st.error("Please upload the excel report file")
             
@@ -55,7 +57,7 @@ st.button('Rekomendasikan menit!', on_click=click_button)
 if st.session_state.clicked:
     st.write('Untuk tim ini direkomendasikan memilih menit 1 hingga '+str(plotdata[1]))
         
-pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match)
+pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
 
 st.pyplot(pn)
 
