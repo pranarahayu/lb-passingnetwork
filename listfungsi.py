@@ -50,7 +50,7 @@ acolors = ['#052d2d', '#094329', '#0b5825', '#0e6e21', '#10841d', '#129919', '#1
 acmap = ListedColormap(acolors, name="acmap")
 acmapr = acmap.reversed()
 
-def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
+def get_PNdata(tl, rp, min_min, max_min, team):
   df = tl.copy()
   df2 = rp.copy()
 
@@ -118,7 +118,7 @@ def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
   passtot.rename({'Count':'Total'}, axis='columns',inplace=True)
   passtot['size'] = (passtot['Total']/max(passtot['Total']))*3000
 
-  pass_between = pass_between[pass_between['Count']>=min_pass]
+  #pass_between = pass_between[pass_between['Count']>=min_pass]
   pass_between = pd.merge(pass_between, passtot, on='Passer', how='left')
 
   return pass_between, listmin
