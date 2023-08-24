@@ -161,15 +161,15 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
       
   for i in range(len(avgpos)):
     if (avgpos['Status'][i]=='Full'):
-      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = avgpos['size'][i], zorder=10,
                     color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
     elif (avgpos['Status'][i]=='Sub In'):
-      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = avgpos['size'][i], zorder=10,
                     color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
       pitch.scatter(avgpos['X'][i]-1.5, avgpos['Y'][i]-2, s = 300, zorder=10,
                     color='#7ed957', edgecolors='#000000', linewidth=2, ax=ax, marker='^')
     else:
-      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = avgpos['size'][i], zorder=10,
                     color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
       pitch.scatter(avgpos['X'][i]+1.5, avgpos['Y'][i]+2, s = 300, zorder=10,
                     color='#e66009', edgecolors='#000000', linewidth=2, ax=ax, marker='v')
