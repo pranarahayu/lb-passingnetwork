@@ -220,7 +220,7 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
 
   ax.text(0, -8, 'PASSING NETWORK', ha='left', fontproperties=bold, color='#FFFFFF', size='22', va='center')
   ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_mins), ha='left', fontproperties=reg, color='#FFFFFF', size='18', va='center')
-  ax.text(100, -8, match.upper(), ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
+  ax.text(100, -8, match, ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
   ax.text(100, -4, gw, ha='right', fontproperties=reg, color='#000000', size='18', va='center')
   
   plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
