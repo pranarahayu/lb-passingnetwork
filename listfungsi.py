@@ -39,11 +39,10 @@ f.close()
 
 reg = fm.FontProperties(fname=f.name)
 
-path_eff = [path_effects.Stroke(linewidth=2, foreground='#f2ff00'),
+path_eff = [path_effects.Stroke(linewidth=3.5, foreground='#ffffff'),
             path_effects.Normal()]
 
-hcolors = ["#052d2d", "#06372b", "#074129", "#094b27", "#0a5526",'#0b5f24','#0c6922',
-           '#0e7320', '#0e7320','#10871c','#139b19', '#14a517', '#15af15']
+hcolors = ['#ffffff', '#d5dcdc', '#acb9b9', '#839696', '#597373', '#305050', '#062d2d']
 hcmap = ListedColormap(hcolors, name="hcmap")
 hcmapr = hcmap.reversed()
 
@@ -56,8 +55,20 @@ def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
   df2 = rp.copy()
 
   pos = df2[df2['Team']==team]
-  pos = pos[['Name', 'Position (in match)']]
-  pos = pos[pos['Position (in match)'].notna()]
+  pos['Position (in match)'].fillna('SUBS', inplace=True)
+  pos = pos[pos['MoP']>0].reset_index(drop=True)
+  pos['Status'] = 'Full'
+  pos['Nick'] = pos['Name'].str.split(' ').str[0]
+
+  for i in range(len(pos)):
+    if (pos['MoP'][i] < 90) and (pos['Position (in match)'][i]!='SUBS'):
+      pos['Status'][i] = 'Sub Out'
+    elif (pos['MoP'][i] < 90) and (pos['Position (in match)'][i]=='SUBS'):
+      pos['Status'][i] = 'Sub In'
+    else:
+      pos['Status'][i] = 'Full'
+            
+  pos = pos[['No', 'Name', 'Position (in match)', 'Status', 'Nick']]
   pos.rename({'Name':'Passer', 'Position (in match)':'Pos'}, axis='columns',inplace=True)
 
   df['Mins'] = df['Min'].str.split('+').str[0]
@@ -66,7 +77,7 @@ def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
 
   firstsub = df[(df['Action']=='subs') | (df['Action']=='red card')]
   firstsub = firstsub[firstsub['Team']==team]
-  defmin = min(firstsub['Mins'])
+  listmin = list(firstsub['Mins'])
   df = df[df['Act Zone'].notna()]
 
   minmin = min_min
@@ -108,24 +119,22 @@ def get_PNdata(tl, rp, min_min, max_min, team, min_pass):
   passtot['size'] = (passtot['Total']/max(passtot['Total']))*3000
 
   pass_between = pass_between[pass_between['Count']>min_pass]
-  pass_between['width'] = (pass_between['Count']/max(pass_between['Count']))*18
-
   pass_between = pd.merge(pass_between, passtot, on='Passer', how='left')
 
-  return pass_between, defmin
+  return pass_between, listmin
   
 
-def plot_PN(data, min_pass, team, min_min, max_min, match):
+def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
   pass_between = data.copy()
   fig, ax = plt.subplots(figsize=(20, 20), dpi=500)
-  fig.patch.set_facecolor('#062d2d')
-  ax.set_facecolor('#062d2d')
+  fig.patch.set_facecolor('#ffffff')
+  ax.set_facecolor('#ffffff')
 
-  pitch = Pitch(pitch_type='wyscout', pitch_color='#062d2d', line_color='#fcf8f7',
-                corner_arcs=True, stripe=True, stripe_color='#042b2b', goal_type='box', linewidth=3.5)
+  pitch = Pitch(pitch_type='wyscout', pitch_color='#ffffff', line_color='#000000', pad_bottom=13, pad_top=12,
+                corner_arcs=True, stripe=True, stripe_color='#fcf8f7', goal_type='box', linewidth=3.5)
   pitch.draw(ax=ax)
 
-  cmap = plt.cm.get_cmap(acmap)
+  cmap = plt.cm.get_cmap(hcmap)
   for row in pass_between.itertuples():
     if row.Count > min_pass:
       if abs(row.Y_end - row.Y) > abs(row.X_end - row.X):
@@ -147,23 +156,72 @@ def plot_PN(data, min_pass, team, min_min, max_min, match):
                       row.Y_end+y_shift+((row.Y-row.Y_end)/2)),
                   arrowprops=dict(arrowstyle='->', color=cmap(row.passes_scaled),
                                   lw=3, alpha=row.passes_scaled), size=25)
-  avgpos = pass_between[['Passer', 'X', 'Y', 'size', 'Pos']]
-  avgpos = avgpos.groupby(['Passer', 'X', 'Y', 'size', 'Pos'], as_index=False).nunique()
+  avgpos = pass_between[['Passer', 'X', 'Y', 'size', 'No', 'Pos', 'Status', 'Nick']]
+  avgpos = avgpos.groupby(['Passer', 'X', 'Y', 'size', 'No', 'Pos', 'Status', 'Nick'], as_index=False).nunique()
       
-  pass_nodes = pitch.scatter(avgpos['X'], avgpos['Y'], s = avgpos['size'], zorder=10,
-                             color='#f2ff00', edgecolors='#062d2d', linewidth=3, ax=ax)
-  
-  for index, row in avgpos.iterrows():
-    pitch.annotate(row.Pos, xy=(row.X, row.Y), c='#062d2d', va='center', zorder=11,
-                   ha='center', size=12, weight='bold', ax=ax, path_effects=path_eff)
+  for i in range(len(avgpos)):
+    if (avgpos['Status'][i]=='Full'):
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+                    color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
+    elif (avgpos['Status'][i]=='Sub In'):
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+                    color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
+      pitch.scatter(avgpos['X'][i]-1.5, avgpos['Y'][i]-2, s = 300, zorder=10,
+                    color='#7ed957', edgecolors='#000000', linewidth=2, ax=ax, marker='^')
+    else:
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = passtot['size'][i], zorder=10,
+                    color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
+      pitch.scatter(avgpos['X'][i]+1.5, avgpos['Y'][i]+2, s = 300, zorder=10,
+                    color='#e66009', edgecolors='#000000', linewidth=2, ax=ax, marker='v')
+    pitch.annotate(avgpos['No'][i], xy=(avgpos['X'][i], avgpos['Y'][i]), c='#000000', va='center', zorder=11,
+                   ha='center', size=16, weight='bold', ax=ax, path_effects=path_eff)
+    pitch.annotate(avgpos['Nick'][i], xy=(avgpos['X'][i], avgpos['Y'][i]+5), c='#000000', va='center', zorder=11,
+                   ha='center', size=14, weight='bold', ax=ax, path_effects=path_eff)
+              
   if (min_min == 0):
     min_mins = min_min+1
   else:
     min_mins = min_min
 
+  if (max_min == 91):
+    max_mins = max_min-1
+  else:
+    max_mins = max_min
+
+  anot_x = [75, 79, 84, 90]
+  anot_y = [105.35, 105.25, 105.15, 105]
+  anot_s = [500, 1000, 1500, 2000]
+  for x, y, s in zip(anot_x, anot_y, anot_s):
+    ax.scatter(x, y, s=s, c='#ffffff', lw=5,
+               marker='o', edgecolors='#000000')
+  pitch.arrows(74, 110, 92, 110, width=2, color='#000000',
+               headwidth=7, ax=ax)
+  ax.text(75, 112, '1 pass', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+  ax.text(90, 112, '40+ passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+
+  anot_x1 = [8, 12, 16, 20]
+  anot_x2 = [11, 15, 19, 23]
+  anot_a = [0.7, 0.8, 0.9, 1]
+  anot_c = ['#839696','#597373','#305050','#062d2d']
+  for x1, x2, a, c in zip(anot_x1, anot_x2, anot_a, anot_c):
+    pitch.lines(x1, 109, x2, 102, color=c,
+                zorder=1, lw=4, alpha=a, ax=ax)
+  pitch.arrows(7, 110, 23, 110, width=2, color='#000000',
+               headwidth=7, ax=ax)
+  ax.text(8, 112, '3 passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+  ax.text(23, 112, '10+ passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+
+  pitch.scatter(40, 106, s = 800, zorder=10, color='#7ed957',
+                edgecolors='#000000', linewidth=4, ax=ax, marker='^')
+  ax.text(40, 112, 'Subbed In', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+  pitch.scatter(60, 106, s = 800, zorder=10, color='#e66009',
+                edgecolors='#000000', linewidth=4, ax=ax, marker='v')
+  ax.text(60, 112, 'Subbed Out', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+
   ax.text(0, -8, 'PASSING NETWORK', ha='left', fontproperties=bold, color='#FFFFFF', size='22', va='center')
-  ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_min), ha='left', fontproperties=reg, color='#FFFFFF', size='18', va='center')
-  ax.text(100, -4, match.upper(), ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
+  ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_mins), ha='left', fontproperties=reg, color='#FFFFFF', size='18', va='center')
+  ax.text(100, -8, match.upper(), ha='right', fontproperties=reg, color='#FFFFFF', size='18', va='center')
+  ax.text(100, -4, gw, ha='right', fontproperties=reg, color='#000000', size='18', va='center')
   
   plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
   
