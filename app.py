@@ -30,7 +30,7 @@ with col2:
         team2 = rp['Opponent'][0]
         goal1 = rp['Result'].str.split(' -').str[0]
         goal2 = rp['Result'].str.split('- ').str[1]
-        match = team1 +' vs '+team2
+        match = team1 +' '+goal1+' vs '+goal2+' '+team2
     except ValueError:
         st.error("Please upload the excel report file")
             
