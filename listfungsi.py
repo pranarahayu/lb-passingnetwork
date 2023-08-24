@@ -208,7 +208,7 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
                 zorder=1, lw=4, alpha=a, ax=ax)
   pitch.arrows(7, 110, 23, 110, width=2, color='#000000',
                headwidth=7, ax=ax)
-  ax.text(8, 112, '3 passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
+  ax.text(8, 112, str(min_pass)+' passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
   ax.text(23, 112, '10+ passes', ha='center', fontproperties=bold, color='#000000', size='16', va='center')
 
   pitch.scatter(40, 106, s = 800, zorder=10, color='#7ed957',
