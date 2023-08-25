@@ -98,12 +98,9 @@ def get_PNdata(tl, rp, min_min, max_min, team):
   temp = avgpos['Act Zone'].apply(lambda x: pd.Series(list(x)))
   avgpos['X'] = temp[0]
   avgpos['Y'] = temp[1]
-  avgpos['Y'] = avgpos['Y'].replace({'A':np.random.randint(2, 20),'B':np.random.randint(21, 40),
-                                    'C':np.random.randint(41, 60),
-                                    'D':np.random.randint(61, 80),'E':np.random.randint(81, 98)})
-  avgpos['X'] = avgpos['X'].replace({'1':np.random.randint(2, 16),'2':np.random.randint(17, 33),
-                                    '3':np.random.randint(34, 49),'4':np.random.randint(50, 66),
-                                    '5':np.random.randint(67, 83),'6':np.random.randint(84, 98)})
+  avgpos['Y'] = avgpos['Y'].replace({'A':10,'B':30,'C':50,'D':70,'E':90})
+  avgpos['X'] = avgpos['X'].replace({'1':8.34,'2':25.34,'3':42.34,
+                                     '4':59.34,'5':76.34,'6':93.34})
   avgpos = avgpos[['Act Name','X','Y']]
   avgpos = avgpos.groupby(['Act Name'], as_index=False).mean()
   avgpos.rename({'Act Name':'Passer'}, axis='columns',inplace=True)
