@@ -55,7 +55,7 @@ if 'clicked' not in st.session_state:
 def click_button():
     st.session_state.clicked = True
             
-st.button('Subs/Red Cards Mins!', on_click=click_button)
+st.button('Subs/Red Cards', on_click=click_button)
 if st.session_state.clicked:
     st.write('Menit-menit pergantian dan/atau kartu merah: '+str(plotdata[1]))
         
