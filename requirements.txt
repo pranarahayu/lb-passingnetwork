@@ -1,5 +1,5 @@
 streamlit
-matplotlib
+matplotlib == 3.7.2
 pandas
 numpy
 scikit-learn
