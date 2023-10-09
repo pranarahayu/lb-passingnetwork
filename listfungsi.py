@@ -69,7 +69,7 @@ def get_PNdata(tl, rp, min_min, max_min, team):
       pos['Status'][i] = 'Full'
             
   pos = pos[['No. Punggung', 'Name', 'Position (in match)', 'Status', 'Nick']]
-  pos.rename({'Nick':'Passer', 'Position (in match)':'Pos', 'No. Punggung':'No'}, axis='columns',inplace=True)
+  pos.rename({'Name':'Passer', 'Position (in match)':'Pos', 'No. Punggung':'No'}, axis='columns',inplace=True)
 
   df['Mins'] = df['Min'].str.split('+').str[0]
   df['Mins'].fillna(df['Min'], inplace=True)
@@ -172,7 +172,7 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
                     color='#e66009', edgecolors='#000000', linewidth=2, ax=ax, marker='v')
     pitch.annotate(avgpos['No'][i], xy=(avgpos['X'][i], avgpos['Y'][i]), c='#000000', va='center', zorder=11,
                    ha='center', size=16, weight='bold', ax=ax, path_effects=path_eff)
-    pitch.annotate(avgpos['Passer'][i], xy=(avgpos['X'][i], avgpos['Y'][i]+5), c='#000000', va='center', zorder=11,
+    pitch.annotate(avgpos['Nick'][i], xy=(avgpos['X'][i], avgpos['Y'][i]+5), c='#000000', va='center', zorder=11,
                    ha='center', size=14, weight='bold', ax=ax, path_effects=path_eff)
               
   if (min_min == 0):
