@@ -58,7 +58,7 @@ def get_PNdata(tl, rp, min_min, max_min, team):
   pos['Position (in match)'].fillna('SUBS', inplace=True)
   pos = pos[pos['MoP']>0].reset_index(drop=True)
   pos['Status'] = 'Full'
-  pos['Nick'] = pos['Name'].str.split(' ').str[0]
+  #pos['Nick'] = pos['Name'].str.split(' ').str[0]
 
   for i in range(len(pos)):
     if (pos['MoP'][i] < 90) and (pos['Position (in match)'][i]!='SUBS'):
