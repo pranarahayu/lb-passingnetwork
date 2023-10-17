@@ -74,7 +74,7 @@ def get_PNdata(tl, rp, min_min, max_min, team):
   df['Mins'] = df['Min'].str.split('+').str[0]
   df['Mins'].fillna(df['Min'], inplace=True)
   df['Mins'] = df['Mins'].astype(float)
-  df['No'] = df['No'].astype(int)
+  pos['No'] = pos['No'].astype(int)
 
   firstsub = df[(df['Action']=='subs') | (df['Action']=='red card')]
   firstsub = firstsub[firstsub['Team']==team]
