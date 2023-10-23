@@ -34,17 +34,19 @@ with col2:
         match = team1.upper() +' '+goal1+' vs '+goal2+' '+team2.upper()
         match = match[0]
         #match = team1+' vs '+team2
-        gw = 'Liga 1 2023/24 | GW '+str(mw)
     except ValueError:
         st.error("Please upload the excel report file")
             
-colx, coly, colz = st.columns(3)
+colx, coly, colz, cola = st.columns(4)
 with colx:
     filter = st.selectbox('Select Team', [team1, team2])
 with coly:
     min_pass = st.number_input('Select Min. Successful Passes', min_value=1, max_value=5, step=1)
 with colz:
     menit = st.slider('Select Minutes', 0, 91, (1, 30))
+with cola:
+    komp = st.selectbox('Select Competition', ['Liga 1 2023/24', 'Liga 2 2023/24'])
+    gw = komp+' | GW '+str(mw)
         
 plotdata = get_PNdata(tl, rp, menit[0], menit[1], filter)
 pass_between = plotdata[0]
