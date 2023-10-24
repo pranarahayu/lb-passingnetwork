@@ -66,7 +66,9 @@ if st.session_state.clicked:
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
 ap = plot_PN(pass_between, filter, menit[0], menit[1], match, gw)
 if avpos:
-st.pyplot(pn)
+    st.pyplot(ap)
+else:
+    st.pyplot(pn)
 
 with open('pnet.jpg', 'rb') as img:
     fn = 'PN_'+filter+'.jpg'
