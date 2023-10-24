@@ -228,7 +228,7 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
   
   return fig
 
-def plot_AP(data, min_pass, team, min_min, max_min, match, gw):
+def plot_AP(data, team, min_min, max_min, match, gw):
   pass_between = data.copy()
   fig, ax = plt.subplots(figsize=(20, 20), dpi=500)
   fig.patch.set_facecolor('#ffffff')
