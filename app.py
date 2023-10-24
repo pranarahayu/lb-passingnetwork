@@ -71,5 +71,8 @@ else:
     st.pyplot(pn)
 
 with open('pnet.jpg', 'rb') as img:
-    fn = 'PN_'+filter+'.jpg'
+    if avpos:
+        fn = 'AP_'+filter+'.jpg'
+    else:
+        fn = 'PN_'+filter+'.jpg'
     btn = st.download_button(label="Download Passing Network", data=img, file_name=fn, mime="image/jpg")
