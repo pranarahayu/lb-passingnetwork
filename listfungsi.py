@@ -227,3 +227,43 @@ def plot_PN(data, min_pass, team, min_min, max_min, match, gw):
   plt.savefig('pnet.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
   
   return fig
+
+def plot_AP(data, min_pass, team, min_min, max_min, match, gw):
+  pass_between = data.copy()
+  fig, ax = plt.subplots(figsize=(20, 20), dpi=500)
+  fig.patch.set_facecolor('#ffffff')
+  ax.set_facecolor('#ffffff')
+
+  pitch = Pitch(pitch_type='wyscout', pitch_color='#ffffff', line_color='#000000', pad_bottom=13, pad_top=12,
+                corner_arcs=True, stripe=True, stripe_color='#fcf8f7', goal_type='box', linewidth=3.5)
+  pitch.draw(ax=ax)
+  
+  avgpos = pass_between[['Passer', 'X', 'Y', 'size', 'No', 'Pos', 'Status', 'Nick']]
+  avgpos = avgpos.groupby(['Passer', 'X', 'Y', 'size', 'No', 'Pos', 'Status', 'Nick'], as_index=False).nunique()
+      
+  for i in range(len(avgpos)):
+    if (avgpos['Status'][i]=='Full'):
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = 700, zorder=10,
+                    color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
+
+    pitch.annotate(avgpos['No'][i], xy=(avgpos['X'][i], avgpos['Y'][i]), c='#000000', va='center', zorder=11,
+                   ha='center', size=16, weight='bold', ax=ax, path_effects=path_eff)
+              
+  if (min_min == 0):
+    min_mins = min_min+1
+  else:
+    min_mins = min_min
+
+  if (max_min == 91):
+    max_mins = max_min-1
+  else:
+    max_mins = max_min
+
+  ax.text(0, -8, 'AVERAGE STARTING PLAYER POSITION', ha='left', fontproperties=bold, color='#000000', size='22', va='center')
+  ax.text(0, -4, team.upper()+' | MINUTES: '+str(min_mins)+'-'+str(max_mins), ha='left', fontproperties=reg, color='#000000', size='18', va='center')
+  ax.text(100, -8, match.upper(), ha='right', fontproperties=reg, color='#000000', size='18', va='center')
+  ax.text(100, -4, gw, ha='right', fontproperties=reg, color='#000000', size='18', va='center')
+  
+  plt.savefig('apos.jpg', dpi=500, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
+  
+  return fig
