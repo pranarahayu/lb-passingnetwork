@@ -41,7 +41,6 @@ with col2:
 colx, coly, colz, cola = st.columns(4)
 with colx:
     filter = st.selectbox('Select Team', [team1, team2])
-    avpos = st.checkbox('Generate Average Position?')
 with coly:
     min_pass = st.number_input('Select Min. Successful Passes', min_value=1, max_value=5, step=1)
 with colz:
@@ -64,15 +63,8 @@ if st.session_state.clicked:
     st.write('Menit-menit pergantian dan/atau kartu merah: '+str(plotdata[1]))
         
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
-ap = plot_AP(pass_between, filter, menit[0], menit[1], match, gw)
-if avpos:
-    st.pyplot(ap)
-else:
-    st.pyplot(pn)
+st.pyplot(pn)
 
 with open('pnet.jpg', 'rb') as img:
-    if avpos:
-        fn = 'AP_'+filter+'.jpg'
-    else:
-        fn = 'PN_'+filter+'.jpg'
+    fn = 'PN_'+filter+'.jpg'
     btn = st.download_button(label="Download Passing Network", data=img, file_name=fn, mime="image/jpg")
