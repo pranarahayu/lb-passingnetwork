@@ -10,7 +10,6 @@ st.markdown('Created by: Prana - R&D Division Lapangbola.com')
 sys.path.append("listfungsi.py")
 from listfungsi import get_PNdata
 from listfungsi import plot_PN
-from listfungsi import plot_AP
 
 with st.expander("BACA INI DULU."):
     st.write("Upload file timeline yang telah selesai di-QC!")
