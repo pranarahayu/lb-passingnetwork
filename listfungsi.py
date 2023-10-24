@@ -243,9 +243,11 @@ def plot_AP(data, team, min_min, max_min, match, gw):
       
   for i in range(len(avgpos)):
     if (avgpos['Status'][i]=='Full'):
-      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = 700, zorder=10,
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = 1000, zorder=10,
                     color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
-
+    elif (avgpos['Status'][i]=='Sub Out'):
+      pitch.scatter(avgpos['X'][i], avgpos['Y'][i], s = 1000, zorder=10,
+                    color='#ffffff', edgecolors='#000000', linewidth=5, ax=ax)
     pitch.annotate(avgpos['No'][i], xy=(avgpos['X'][i], avgpos['Y'][i]), c='#000000', va='center', zorder=11,
                    ha='center', size=16, weight='bold', ax=ax, path_effects=path_eff)
               
