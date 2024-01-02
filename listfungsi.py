@@ -71,9 +71,9 @@ def get_PNdata(tl, rp, min_min, max_min, team):
   pos = pos[['No. Punggung', 'Name', 'Position (in match)', 'Status', 'Nick']]
   pos.rename({'Name':'Passer', 'Position (in match)':'Pos', 'No. Punggung':'No'}, axis='columns',inplace=True)
 
-  df['Min'] = df['Min'].str.split(' :').str[0]
-  df['Mins'] = df['Min'].str.split('+').str[0]
-  df['Mins'].fillna(df['Min'], inplace=True)
+  df['Minx'] = df['Min'].str.split(' :').str[0]
+  df['Mins'] = df['Minx'].str.split('+').str[0]
+  df['Mins'].fillna(df['Minx'], inplace=True)
   df['Mins'] = df['Mins'].astype(float)
   pos['No'] = pos['No'].astype(int)
 
