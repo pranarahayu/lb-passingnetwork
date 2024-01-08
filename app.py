@@ -61,7 +61,6 @@ st.button('Subs/Red Cards', on_click=click_button)
 if st.session_state.clicked:
     st.write('Menit-menit pergantian dan/atau kartu merah: '+str(plotdata[1]))
 
-st.write(pass_between)
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
 st.pyplot(pn)
 
