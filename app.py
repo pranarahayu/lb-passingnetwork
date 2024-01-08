@@ -62,6 +62,7 @@ if st.session_state.clicked:
     st.write('Menit-menit pergantian dan/atau kartu merah: '+str(plotdata[1]))
         
 pn = plot_PN(pass_between, min_pass, filter, menit[0], menit[1], match, gw)
+st.write(pass_between)
 st.pyplot(pn)
 
 with open('pnet.jpg', 'rb') as img:
